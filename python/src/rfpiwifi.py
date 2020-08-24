@@ -9,20 +9,33 @@ class ReaderWifi:
         """Initialize ReaderWifi without any initial pin setup"""
         
 
-    def initfromdict(cls, datadict):
-        """Suggested method of initialization, associate pin number with names:
+    def loadpinsfrom_dict(cls, datadict):
+        """Suggested method of initialization
+        associate pin number with case insensitive names:
         SDA, SCK, MOSI, MISO, IRQ, RST"""
-        
+
         tempdict = dict((k.lower(), v) for k,v in datadict.items())
+        
+        if "sda" not in tempdict or "sck" not in tempdict or "mosi" not in tempdict or "miso" not in tempdict or "rst" not in tempdict:
+            return False
 
-        self.sda = datadict["sda"]
-        self.sck = datadict["sck"]
-        self.mosi = datadict["mosi"]
-        self.miso = datadict["miso"]
-        self.irq = datadict["irq"]
-        self.rst = datadict["rst"]
+        self.sda = tempdict["sda"]
+        self.sck = tempdict["sck"]
+        self.mosi = tempdict["mosi"]
+        self.miso = tempdict["miso"]
+        
+        if  'irq' in tempdict:
+            self.irq = tempdict["irq"]
+        else:
+            self.irq = None
+            
+        self.rst = tempdict["rst"]
 
-    def initfromargs(self, sda, sck, mosi, miso, irq, rst):
+        return True
+
+    def loadpinsfrom_args(self, sda, sck, mosi, miso, irq, rst):
+        """Method of initialization
+        Check that pins match the proper argument"""
         self.sda = sda
         self.sck = sck
         self.mosi = mosi
@@ -30,7 +43,9 @@ class ReaderWifi:
         self.irq = irq
         self.rst = rst
     
-    def initfromargs_noirq(self, sda, sck, mosi, miso, rst):
+    def loadpinsfrom_args_no_irq(self, sda, sck, mosi, miso, rst):
+        """Method of initialization without irq included
+        Check that pins match the proper argument"""
         self.sda = sda
         self.sck = sck
         self.mosi =mosi
