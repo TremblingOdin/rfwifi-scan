@@ -61,9 +61,33 @@ class RFWIFI:
             self.targeturl = None
             return False
 
+    
+    
     def check_properlysetup(self):
         """checks if the necessary aspects of the class are initialized"""
         if self.readertype is None or self.readertype is ReaderType.NEITHER or self.targeturl is None or self.reader is None:
             return False
         else:
             return True
+
+    
+
+    def readthen_get(self, processdatafunction, extendedroute):
+        """Attempts to build the url, expects forward slashes
+        then sends and returns a request with the built authentication tuples, and parameters
+        The processdatafunction is expected to return an auth tuple and parameter in that order"""
+
+        if self.targeturl[-1] == "/" and extendedroute[0] == "/":
+            requrl = self.targeturl + extendedroute[1:]
+        elif self.targeturl[-1] != "/" and extendedroute[0] != "/":
+            requrl = targeturl + "/" + extendedroute
+        elif self.targeturl[-1] == "/" or extendedroute[0] == "/":
+            requrl = targeturl + extendedroute
+
+        if requrl is None:
+            return None
+
+        authprocessdatafunction(self.reader.read())
+
+
+        return r
