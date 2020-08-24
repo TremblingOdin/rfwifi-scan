@@ -5,12 +5,11 @@ from mfrc522 import SimpleMFRC522
 # At the moment of writing this I am working with a pi 3 due to it's included wifi capabilities
 
 class ReaderWifi:
-    def __init__(self, pins):
-        """Initialize ReaderWifi from pinlist, excepted input is SDA, SCK, MOSI, MISO, IRQ, RST"""
+    def __init__(self):
+        """Initialize ReaderWifi without any initial pin setup"""
         
 
-    @classmethod
-    def fromdict(cls, datadict):
+    def initfromdict(cls, datadict):
         """Suggested method of initialization, associate pin number with names:
         SDA, SCK, MOSI, MISO, IRQ, RST"""
         
@@ -23,4 +22,18 @@ class ReaderWifi:
         self.irq = datadict["irq"]
         self.rst = datadict["rst"]
 
-
+    def initfromargs(self, sda, sck, mosi, miso, irq, rst):
+        self.sda = sda
+        self.sck = sck
+        self.mosi = mosi
+        self.miso = miso
+        self.irq = irq
+        self.rst = rst
+    
+    def initfromargs_noirq(self, sda, sck, mosi, miso, rst):
+        self.sda = sda
+        self.sck = sck
+        self.mosi =mosi
+        slef.miso = miso
+        self.irq = None
+        self.rst = rst
