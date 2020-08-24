@@ -104,5 +104,20 @@ class RFWIFI:
 
         return r
 
-    def getthen_write(self, get_id):
-        """Gets data from the url, 
+    def getthen_write(self, extendedroute, get_id, authtuple, payload, processdatafunction):
+        """Gets data from the url, then writes it to the rfid
+        if you don't mind writing raw json fell free to ignore the process data function
+        However if you want the data to be legible pass one in"""
+        
+        if extendedroute is not None:
+            requrl = buildroute(self.targeturl, extendedroute
+            requrl = buildroute(requrl, get_id)
+        else:
+            requrl = buildroute, self.targeturl, get_it)
+
+        data = requests.get(requrl, auth=authtuple, params=payload)
+
+        if processdatafunction is not None:
+            data = processdatafunction(data)
+
+        self.reader.write(data)
