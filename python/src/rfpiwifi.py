@@ -8,17 +8,16 @@ from mfrc522 import SimpleMFRC522
 class ReaderWifi:
     def __init__(self, targeturl):
         """Initialize ReaderWifi without any initial pin setup"""
+        load_url(targeturl)
+
+
+    def load_url(self, targeturl):
         valid = validators.url(targeturl)
-        
+
         if(valid==True):
             self.targeturl = targeturl
         else:
             self.targeturl = None
-
-
-
-    def load_url(self, targeturl):
-        self.targeturl = None
 
 
 
