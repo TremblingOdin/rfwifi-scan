@@ -4,9 +4,12 @@ import validators
 from .rfpi import ReaderPI
 
 
-def pyreader():
+def pireader():
     rfreader = ReaderPI()
     return rfreader
+
+def neireader():
+    return None
 
 readerswitch = {
     ReaderType.PI: pireader,
@@ -43,7 +46,7 @@ class RFWIFI:
             self.readertype = readertype
             return False
         
-        
+        self.reader = readerswitch.get(self.readertype)  
         return True
 
     
@@ -60,7 +63,7 @@ class RFWIFI:
 
     def check_properlysetup(self):
         """checks if the necessary aspects of the class are initialized"""
-        if self.readertype is None or self.readertype is ReaderType.NEITHER or self.targeturl is None:
+        if self.readertype is None or self.readertype is ReaderType.NEITHER or self.targeturl is None or self.reader is None:
             return False
         else:
             return True
