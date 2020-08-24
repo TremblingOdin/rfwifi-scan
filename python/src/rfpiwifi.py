@@ -6,19 +6,9 @@ from mfrc522 import SimpleMFRC522
 # At the moment of writing this I am working with a pi 3 due to it's included wifi capabilities
 
 class ReaderWifi:
-    def __init__(self, targeturl):
+    def __init__(self):
         """Initialize ReaderWifi without any initial pin setup"""
-        load_url(targeturl)
         self.reader = SimpleMFRC522()
-
-
-    def load_url(self, targeturl):
-        valid = validators.url(targeturl)
-
-        if(valid==True):
-            self.targeturl = targeturl
-        else:
-            self.targeturl = None
 
 
 
