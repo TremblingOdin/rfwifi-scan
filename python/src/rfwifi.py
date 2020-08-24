@@ -8,8 +8,12 @@ def pireader():
     rfreader = ReaderPI()
     return rfreader
 
+
+
 def neireader():
     return None
+
+
 
 readerswitch = {
     ReaderType.PI: pireader,
@@ -18,6 +22,21 @@ readerswitch = {
     ReaderType.NEITHER: neireader
 }
 
+
+
+def buildroute(baseurl, extendedroute):
+    """attempts to build and validate a possible route"""
+    if extendedroute is None:
+        if baseurl[-1] != "/":
+            requrl = baseurl + "/"
+    elif baseurl[-1] == "/" and extendedroute[0] == "/":
+        requrl = baseurl + extendedroute[1:]
+    elif baseurl[-1] != "/" and extendedroute[0] != "/":
+        requrl = baseurl + "/" + extendedroute
+    elif baseurl[-1] == "/" or extendedroute[0] == "/":
+        requrl = baseurl + extendedroute
+
+    return requrl
 
 
 class ReaderType(Enum):
@@ -77,17 +96,13 @@ class RFWIFI:
         then sends and returns a request with the built authentication tuples, and parameters
         The processdatafunction is expected to return an auth tuple and parameter in that order"""
 
-        if self.targeturl[-1] == "/" and extendedroute[0] == "/":
-            requrl = self.targeturl + extendedroute[1:]
-        elif self.targeturl[-1] != "/" and extendedroute[0] != "/":
-            requrl = targeturl + "/" + extendedroute
-        elif self.targeturl[-1] == "/" or extendedroute[0] == "/":
-            requrl = targeturl + extendedroute
+        requrl = buildroute(self.targeturl, extendedroute)
 
-        if requrl is None:
-            return None
+        authtuple, payload = processdatafunction(self.reader.read())
 
-        authprocessdatafunction(self.reader.read())
-
+        r = requests.get(requrl, auth=authtuple, params=payload)
 
         return r
+
+    def getthen_write(self, get_id):
+        """Gets data from the url, 
