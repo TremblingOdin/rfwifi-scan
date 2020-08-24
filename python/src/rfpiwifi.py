@@ -9,6 +9,7 @@ class ReaderWifi:
     def __init__(self, targeturl):
         """Initialize ReaderWifi without any initial pin setup"""
         load_url(targeturl)
+        self.reader = SimpleMFRC522()
 
 
     def load_url(self, targeturl):
@@ -65,6 +66,21 @@ class ReaderWifi:
         self.sda = sda
         self.sck = sck
         self.mosi =mosi
-        slef.miso = miso
+        self.miso = miso
         self.irq = None
         self.rst = rst
+
+
+
+    def read(self):
+        """Attempts to read into a list and returns that list"""
+        
+        try:
+            rfid, rftext = self.reader.read()
+            rfdict = {rfid, rftext}
+        finally:
+            GPIO.cleanup()
+            if "rfid" not in locals() or "rftext" not in locals()
+                rfdict = None
+
+        return rfdict
