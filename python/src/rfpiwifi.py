@@ -1,3 +1,4 @@
+import validators
 import RPi.GPIO as GPIO
 # At the moment of writing this I am working with an mfrc522
 from mfrc522 import SimpleMFRC522
@@ -5,11 +6,23 @@ from mfrc522 import SimpleMFRC522
 # At the moment of writing this I am working with a pi 3 due to it's included wifi capabilities
 
 class ReaderWifi:
-    def __init__(self):
+    def __init__(self, targeturl):
         """Initialize ReaderWifi without any initial pin setup"""
+        valid = validators.url(targeturl)
         
+        if(valid==True):
+            self.targeturl = targeturl
+        else:
+            self.targeturl = None
 
-    def loadpinsfrom_dict(cls, datadict):
+
+
+    def load_url(self, targeturl):
+        self.targeturl = None
+
+
+
+    def load_pinsfrom_dict(self, datadict):
         """Suggested method of initialization
         associate pin number with case insensitive names:
         SDA, SCK, MOSI, MISO, IRQ, RST"""
@@ -33,7 +46,9 @@ class ReaderWifi:
 
         return True
 
-    def loadpinsfrom_args(self, sda, sck, mosi, miso, irq, rst):
+
+
+    def load_pinsfrom_args(self, sda, sck, mosi, miso, irq, rst):
         """Method of initialization
         Check that pins match the proper argument"""
         self.sda = sda
@@ -42,8 +57,10 @@ class ReaderWifi:
         self.miso = miso
         self.irq = irq
         self.rst = rst
-    
-    def loadpinsfrom_args_no_irq(self, sda, sck, mosi, miso, rst):
+
+
+
+    def load_pinsfrom_args_no_irq(self, sda, sck, mosi, miso, rst):
         """Method of initialization without irq included
         Check that pins match the proper argument"""
         self.sda = sda
