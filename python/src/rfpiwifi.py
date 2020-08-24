@@ -84,3 +84,13 @@ class ReaderWifi:
                 rfdict = None
 
         return rfdict
+
+
+
+    def write(self, data):
+        """Attemtps to write data to an rfid"""
+
+        try:
+            self.reader.write(data)
+        finally:
+            GPIO.cleanup()
