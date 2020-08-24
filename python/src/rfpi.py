@@ -1,4 +1,3 @@
-import validators
 import RPi.GPIO as GPIO
 # At the moment of writing this I am working with an mfrc522
 from mfrc522 import SimpleMFRC522
@@ -70,7 +69,7 @@ class ReaderWifi:
             rfdict = {rfid, rftext}
         finally:
             GPIO.cleanup()
-            if "rfid" not in locals() or "rftext" not in locals()
+            if rfid is None or rftext is None:
                 rfdict = None
 
         return rfdict
