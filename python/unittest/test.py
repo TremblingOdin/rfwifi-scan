@@ -1,8 +1,10 @@
 import unittest
+from ../src/rfwifi import buildroute, RFWIFI, readertype
+
 
 class TestRFWIFI(unittest.TestCase):
     def test_create(self):
-
+        
 
 
 
