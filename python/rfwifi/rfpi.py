@@ -1,6 +1,19 @@
-import RPi.GPIO as GPIO
-# At the moment of writing this I am working with an mfrc522
-from mfrc522 import SimpleMFRC522
+import subprocess
+
+bashCmd = ["grep","Hardware", "/proc/cpuinfo"]
+process= subprocess.Popen(bashCmd, stdout=subprocess.PIPE)
+
+output, error = process.communicate()
+
+print(output)
+
+if output == "Hardware:BCM2708":
+    import RPi.GPIO as GPIO
+    # At the moment of writing this I am working with an mfrc522
+    from mfrc522 import SimpleMFRC522
+else:
+    from dev.raspberry import Fake_GPIO as GPIO
+
 
 # At the moment of writing this I am working with a pi 3 due to it's included wifi capabilities
 

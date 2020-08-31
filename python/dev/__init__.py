@@ -1,1 +1,1 @@
-from dev-raspberry.py import Fake_GPIO
+from .raspberry import Fake_GPIO
