@@ -1,5 +1,5 @@
 import unittest
-from rfwifi import buildroute, RFWIFI, readertype
+from rfwifi import buildroute, RFWIFI, ReaderType
 
 
 class TestRFWIFI(unittest.TestCase):

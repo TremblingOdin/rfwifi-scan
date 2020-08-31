@@ -4,9 +4,28 @@ import validators
 from .rfpi import ReaderPI
 
 
+
+class ReaderType(Enum):
+    PI = 1
+    ARDUINO = 2
+    OTHER = 3
+    NEITHER = 4
+
+
+
 def pireader():
     rfreader = ReaderPI()
     return rfreader
+
+
+
+def ardreader():
+    return None
+
+
+
+def othreader():
+    return None
 
 
 
@@ -39,11 +58,6 @@ def buildroute(baseurl, extendedroute):
     return requrl
 
 
-class ReaderType(Enum):
-    PYTHON = 1
-    ARDUINO = 2
-    OTHER = 3
-    NEITHER = 4
 
 
 
@@ -110,10 +124,10 @@ class RFWIFI:
         However if you want the data to be legible pass one in"""
         
         if extendedroute is not None:
-            requrl = buildroute(self.targeturl, extendedroute
+            requrl = buildroute(self.targeturl, extendedroute)
             requrl = buildroute(requrl, get_id)
         else:
-            requrl = buildroute, self.targeturl, get_it)
+            requrl = buildroute(self.targeturl, get_it)
 
         data = requests.get(requrl, auth=authtuple, params=payload)
 
