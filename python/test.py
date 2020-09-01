@@ -18,7 +18,7 @@ class TestRFWIFI(unittest.TestCase):
         self.assertEqual(testbuildfirstslash, testbuildsecondslash)
         self.assertEqual(testbuild, testbuildfirstslash)
 
-        rfwifi = RFWIFI()        
+        with self.assertRaises(TypeError): RFWIFI()   
 
 
 
